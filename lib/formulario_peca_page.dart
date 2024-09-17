@@ -4,7 +4,7 @@ import 'models/peca.dart';
 class FormularioPecaPage extends StatefulWidget {
   final Function(Peca) adicionarPeca;
 
-  FormularioPecaPage({required this.adicionarPeca});
+  const FormularioPecaPage({super.key, required this.adicionarPeca});
 
   @override
   _FormularioPecaPageState createState() => _FormularioPecaPageState();
@@ -15,7 +15,7 @@ class _FormularioPecaPageState extends State<FormularioPecaPage> {
   String? _nome;
   double? _preco;
   CategoriaPeca? _categoriaSelecionada;
-  List<CategoriaPeca> _categorias = [
+  final List<CategoriaPeca> _categorias = [
     CategoriaPeca(id: 1, nome: 'Eletrônica'),
     CategoriaPeca(id: 2, nome: 'Mecânica'),
   ];
@@ -24,14 +24,14 @@ class _FormularioPecaPageState extends State<FormularioPecaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Adicionar Peça'),
+        title: const Text('Adicionar Peça'),
       ),
       body: Form(
         key: _formKey,
         child: Column(
           children: [
             TextFormField(
-              decoration: InputDecoration(labelText: 'Nome da Peça'),
+              decoration: const InputDecoration(labelText: 'Nome da Peça'),
               onSaved: (value) => _nome = value,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -41,7 +41,7 @@ class _FormularioPecaPageState extends State<FormularioPecaPage> {
               },
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Preço'),
+              decoration: const InputDecoration(labelText: 'Preço'),
               keyboardType: TextInputType.number,
               onSaved: (value) => _preco = double.tryParse(value ?? '0'),
               validator: (value) {
@@ -53,7 +53,7 @@ class _FormularioPecaPageState extends State<FormularioPecaPage> {
             ),
             DropdownButtonFormField<CategoriaPeca>(
               value: _categoriaSelecionada,
-              decoration: InputDecoration(labelText: 'Categoria'),
+              decoration: const InputDecoration(labelText: 'Categoria'),
               items: _categorias.map((categoria) {
                 return DropdownMenuItem(
                   value: categoria,
@@ -88,7 +88,7 @@ class _FormularioPecaPageState extends State<FormularioPecaPage> {
                   Navigator.pop(context);
                 }
               },
-              child: Text('Salvar'),
+              child: const Text('Salvar'),
             ),
           ],
         ),

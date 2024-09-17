@@ -4,16 +4,16 @@ import 'models/peca.dart';
 class ListaPecaPage extends StatelessWidget {
   final List<Peca> pecas;
 
-  ListaPecaPage({required this.pecas});
+  const ListaPecaPage({super.key, required this.pecas});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Peças'),
+        title: const Text('Lista de Peças'),
       ),
       body: pecas.isEmpty
-          ? Center(child: Text('Nenhuma peça cadastrada'))
+          ? const Center(child: Text('Nenhuma peça cadastrada'))
           : ListView.builder(
               itemCount: pecas.length,
               itemBuilder: (context, index) {
