@@ -5,19 +5,24 @@ import 'formulario_peca_page.dart';
 
 class PecaListScreen extends StatelessWidget {
   final PecaApi api = PecaApi();
+  final Function(Peca) adicionarPeca;  // Função para adicionar peça
+
+  PecaListScreen({Key? key, required this.adicionarPeca}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Peças'),
+        title: const Text('Lista de Peças'),
         actions: [
           IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PecaFormScreen()),
+                MaterialPageRoute(
+                  builder: (context) => FormularioPecaPage(adicionarPeca: adicionarPeca),  // Passando o parâmetro obrigatório
+                ),
               );
             },
           ),
@@ -27,7 +32,7 @@ class PecaListScreen extends StatelessWidget {
         future: api.getAll(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Text('Erro: ${snapshot.error}');
           } else {
@@ -43,21 +48,28 @@ class PecaListScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.edit),
+                        icon: const Icon(Icons.edit),
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => PecaFormScreen(peca: peca),
+                              builder: (context) => FormularioPecaPage(
+                                adicionarPeca: adicionarPeca,  // Passando o parâmetro obrigatório
+                                peca: peca,
+                              ),
                             ),
                           );
                         },
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete),
+                        icon: const Icon(Icons.delete),
                         onPressed: () {
                           api.delete(peca.id!).then((_) {
-                            // Atualizar a lista
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Peça deletada com sucesso!'),
+                              ),
+                            );
                           });
                         },
                       ),

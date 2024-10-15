@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 import '../models/peca.dart';
-import '../services/peca_api.dart';
 
-class PecaFormScreen extends StatefulWidget {
-  final Peca? peca;
+class FormularioPecaPage extends StatefulWidget {
+  final Function(Peca) adicionarPeca; // Função callback para adicionar peça
+  final Peca? peca; // Objeto peça que será editado (pode ser nulo para criação)
 
-  PecaFormScreen({this.peca});
+  // Super.key foi adicionado para seguir as boas práticas
+  const FormularioPecaPage({required this.adicionarPeca, this.peca, Key? key}) : super(key: key);
 
   @override
-  _PecaFormScreenState createState() => _PecaFormScreenState();
+  _FormularioPecaPageState createState() => _FormularioPecaPageState();
 }
 
-class _PecaFormScreenState extends State<PecaFormScreen> {
+class _FormularioPecaPageState extends State<FormularioPecaPage> {
   final _formKey = GlobalKey<FormState>();
-  late String _nome;
-  late double _preco;
-  final PecaApi api = PecaApi();
+  late String _nome; // Variável para armazenar o nome da peça
+  late double _preco; // Variável para armazenar o preço da peça
+
+  @override
+  void initState() {
+    super.initState();
+    // Inicializa os campos com os valores da peça, se estiver editando
+    _nome = widget.peca?.nome ?? '';
+    _preco = widget.peca?.preco ?? 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +31,16 @@ class _PecaFormScreenState extends State<PecaFormScreen> {
       appBar: AppBar(
         title: Text(widget.peca == null ? 'Nova Peça' : 'Editar Peça'),
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
           child: Column(
             children: [
+              // Campo para o nome da peça
               TextFormField(
-                initialValue: widget.peca?.nome ?? '',
-                decoration: InputDecoration(labelText: 'Nome'),
+                initialValue: _nome,
+                decoration: const InputDecoration(labelText: 'Nome'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira o nome';
@@ -42,13 +51,19 @@ class _PecaFormScreenState extends State<PecaFormScreen> {
                   _nome = value!;
                 },
               ),
+              // Campo para o preço da peça
               TextFormField(
-                initialValue: widget.peca?.preco.toString() ?? '',
-                decoration: InputDecoration(labelText: 'Preço'),
+                initialValue: _preco != 0 ? _preco.toString() : '',
+                decoration: const InputDecoration(labelText: 'Preço'),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira o preço';
+                  }
+                  try {
+                    double.parse(value);
+                  } catch (e) {
+                    return 'Insira um valor numérico válido';
                   }
                   return null;
                 },
@@ -56,19 +71,19 @@ class _PecaFormScreenState extends State<PecaFormScreen> {
                   _preco = double.parse(value!);
                 },
               ),
+              // Botão de submissão
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    if (widget.peca == null) {
-                      api.create(Peca(nome: _nome, preco: _preco)).then((_) {
-                        Navigator.pop(context);
-                      });
-                    } else {
-                      api.update(widget.peca!.id!, Peca(nome: _nome, preco: _preco)).then((_) {
-                        Navigator.pop(context);
-                      });
-                    }
+
+                    // Cria uma nova peça com os dados inseridos
+                    Peca novaPeca = Peca(nome: _nome, preco: _preco);
+                    
+                    // Chama a função de callback para adicionar ou editar a peça
+                    widget.adicionarPeca(novaPeca);
+
+                    Navigator.pop(context); // Fecha a tela ao salvar
                   }
                 },
                 child: Text(widget.peca == null ? 'Criar' : 'Atualizar'),
