@@ -1,15 +1,23 @@
 class Peca {
-  final int id;
-  final String nome;
-  final double preco;
-  final CategoriaPeca categoria;
+  int? id;
+  String nome;
+  double preco;
 
-  Peca({required this.id, required this.nome, required this.preco, required this.categoria});
-}
+  Peca({this.id, required this.nome, required this.preco});
 
-class CategoriaPeca {
-  final  int id;
-  final String nome;
+  factory Peca.fromJson(Map<String, dynamic> json) {
+    return Peca(
+      id: json['id'],
+      nome: json['nome'],
+      preco: json['preco'],
+    );
+  }
 
-  CategoriaPeca({required this.id, required this.nome});
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nome': nome,
+      'preco': preco,
+    };
+  }
 }

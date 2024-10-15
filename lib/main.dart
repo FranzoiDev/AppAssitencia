@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
-import 'lista_peca_page.dart';
-import 'formulario_peca_page.dart';
+import 'screens/home_page.dart';
 import 'models/peca.dart';
 
 void main() {
@@ -33,7 +31,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(), // Página inicial
+      home:  HomePage(), // Página inicial
       routes: {
         '/lista': (context) => ListaPecaPage(pecas: pecas),
         '/formulario': (context) => FormularioPecaPage(adicionarPeca: adicionarPeca),
