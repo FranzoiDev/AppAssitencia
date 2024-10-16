@@ -16,10 +16,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // Lista de peças
+  
   List<Peca> pecas = [];
 
-  // Função para adicionar uma peça
+  
   void adicionarPeca(Peca peca) {
     setState(() {
       pecas.add(peca);
@@ -33,10 +33,10 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(), // Página inicial (use const)
+      home: const HomePage(), 
       routes: {
-        '/lista': (context) => ListaPecaPage(pecas: pecas), // Passe a lista de peças
-        '/formulario': (context) => FormularioPecaPage(adicionarPeca: adicionarPeca), // Função para adicionar peças
+        '/lista': (context) => ListaPecaPage(pecas: pecas), 
+        '/formulario': (context) => FormularioPecaPage(adicionarPeca: adicionarPeca), 
       },
     );
   }

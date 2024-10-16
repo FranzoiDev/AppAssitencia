@@ -5,7 +5,7 @@ import 'formulario_peca_page.dart';
 
 class PecaListScreen extends StatelessWidget {
   final PecaApi api = PecaApi();
-  final Function(Peca) adicionarPeca;  // Função para adicionar peça
+  final Function(Peca) adicionarPeca;  
 
   PecaListScreen({Key? key, required this.adicionarPeca}) : super(key: key);
 
@@ -21,7 +21,7 @@ class PecaListScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => FormularioPecaPage(adicionarPeca: adicionarPeca),  // Passando o parâmetro obrigatório
+                  builder: (context) => FormularioPecaPage(adicionarPeca: adicionarPeca),  
                 ),
               );
             },
@@ -54,7 +54,7 @@ class PecaListScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => FormularioPecaPage(
-                                adicionarPeca: adicionarPeca,  // Passando o parâmetro obrigatório
+                                adicionarPeca: adicionarPeca,  
                                 peca: peca,
                               ),
                             ),
