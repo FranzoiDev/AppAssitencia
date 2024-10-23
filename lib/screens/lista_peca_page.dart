@@ -4,13 +4,13 @@ import '../services/peca_api.dart';
 import 'formulario_peca_page.dart';
 
 class PecaListScreen extends StatefulWidget {
-  const PecaListScreen({Key? key}) : super(key: key);
+  const PecaListScreen({super.key});
 
   @override
-  _PecaListScreenState createState() => _PecaListScreenState();
+  PecaListScreenState createState() => PecaListScreenState();
 }
 
-class _PecaListScreenState extends State<PecaListScreen> {
+class PecaListScreenState extends State<PecaListScreen> {
   final PecaApi api = PecaApi();
   List<Peca> pecas = [];
 

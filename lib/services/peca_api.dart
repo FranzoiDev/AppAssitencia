@@ -4,21 +4,23 @@ import '../models/peca.dart';
 import 'crud_api.dart';
 
 class PecaApi extends CrudApi<Peca> {
-  late String apiUrl;
+  bool _apiUrlInitialized = false;  
 
   PecaApi() : super("") {
-    _initApiUrl();
+    _initApiUrl();  
   }
 
   Future<void> _initApiUrl() async {
+    if (_apiUrlInitialized) return;  
     try {
-      
-      final response = await http.get(Uri.parse('http://localhost:3000/getPort'));
 
+      final response = await http.get(Uri.parse('http://localhost:3000/getPort'));
+     
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         final port = data['port'];
-        apiUrl = 'http://localhost:$port/pecas';
+        apiUrl = 'http://localhost:$port/pecas'; 
+        _apiUrlInitialized = true; 
       } else {
         throw Exception('Erro ao obter a porta');
       }
@@ -51,12 +53,12 @@ class PecaApi extends CrudApi<Peca> {
   }
 
   @override
-  Future<Peca> create(Peca peca) async {
+  Future<Peca> create(Peca item) async {
     await _initApiUrl();
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(peca.toJson()),
+      body: jsonEncode(item.toJson()), 
     );
     if (response.statusCode == 201) {
       return Peca.fromJson(jsonDecode(response.body));
@@ -66,13 +68,12 @@ class PecaApi extends CrudApi<Peca> {
   }
 
   @override
-  Future<Peca> update(int id, Peca peca) async {
+  Future<Peca> update(int id, Peca item) async {
     await _initApiUrl();
     final response = await http.put(
       Uri.parse('$apiUrl/$id'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(peca.toJson()),
-    );
+      body: jsonEncode(item.toJson()),);
     if (response.statusCode == 200) {
       return Peca.fromJson(jsonDecode(response.body));
     } else {

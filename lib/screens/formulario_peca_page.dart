@@ -5,13 +5,13 @@ import '../services/peca_api.dart';
 class FormularioPecaPage extends StatefulWidget {
   final Peca? peca;
 
-  const FormularioPecaPage({this.peca, Key? key}) : super(key: key);
+  const FormularioPecaPage({this.peca, super.key});
 
   @override
-  _FormularioPecaPageState createState() => _FormularioPecaPageState();
+  FormularioPecaPageState createState() => FormularioPecaPageState();
 }
 
-class _FormularioPecaPageState extends State<FormularioPecaPage> {
+class FormularioPecaPageState extends State<FormularioPecaPage> {
   final _formKey = GlobalKey<FormState>();
   late String _nome;
   late double _preco;
@@ -80,7 +80,13 @@ class _FormularioPecaPageState extends State<FormularioPecaPage> {
                       await api.update(widget.peca!.id!, novaPeca); 
                     }
 
-                    Navigator.pop(context, novaPeca); 
+                    if (!mounted) {
+                      
+                      // ignore: use_build_context_synchronously
+                      Navigator.pop(context, novaPeca); 
+
+                    }
+
                   }
                 },
                 child: Text(widget.peca == null ? 'Criar' : 'Atualizar'),
