@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       home: const HomePage(),
       routes: {
         '/lista': (context) => const PecaListScreen(), 
-        '/formulario': (context) => const FormularioPecaPage(adicionarPeca: null),
+        '/formulario': (context) => const FormularioPecaPage(),
       },
     );
   }
