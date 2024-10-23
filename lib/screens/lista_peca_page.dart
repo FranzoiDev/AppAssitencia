@@ -51,12 +51,6 @@ class _PecaListScreenState extends State<PecaListScreen> {
     );
   }
 
-  void adicionarPeca(Peca peca) {
-    setState(() {
-      pecas.add(peca);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,12 +63,11 @@ class _PecaListScreenState extends State<PecaListScreen> {
               Peca? novaPeca = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      FormularioPecaPage(adicionarPeca: adicionarPeca),
+                  builder: (context) => const FormularioPecaPage(),
                 ),
               );
               if (novaPeca != null) {
-                adicionarPeca(novaPeca);
+                carregarPecas(); 
               }
             },
           ),
@@ -98,39 +91,19 @@ class _PecaListScreenState extends State<PecaListScreen> {
                           Peca? pecaEditada = await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => FormularioPecaPage(
-                                adicionarPeca: (pecaEditada) {
-                                  setState(() {
-                                    pecas[index] = pecaEditada;
-                                  });
-                                },
-                                peca: peca,
-                              ),
+                              builder: (context) => FormularioPecaPage(peca: peca),
                             ),
                           );
                           if (pecaEditada != null) {
-                            setState(() {
-                              pecas[index] = pecaEditada;
-                            });
+                            carregarPecas(); 
                           }
                         },
                       ),
                       IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: () async {
-                          try {
-                            await api.delete(peca.id!);
-                            setState(() {
-                              pecas.removeAt(index);
-                            });
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Peça deletada com sucesso!'),
-                              ),
-                            );
-                          } catch (error) {
-                            showErrorDialog(error.toString());
-                          }
+                          await api.delete(peca.id!); 
+                          carregarPecas(); 
                         },
                       ),
                     ],
