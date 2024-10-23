@@ -13,27 +13,19 @@ class MyApp extends StatefulWidget {
 
   @override
   _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  List<Peca> pecas = [];
 
   @override
-  Widget build(BuildContext context) {
+  Widget biuld(BuildContext context) {
     return MaterialApp(
-      title: 'App Peças',
+      title: 'App Peças'
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        Colors.blue,
       ),
       home: const HomePage(),
-      routes: {
-        '/lista': (context) => PecaListScreen(), 
-        '/formulario': (context) => FormularioPecaPage(adicionarPeca: (peca) {
-              setState(() {
-                pecas.add(peca);
-              });
-            }),
-      },
+        routes: {
+          '/lista': (context) => const PecaListScreen(),
+        '/formulario': (context) => const FormularioPecaPage(adicionarPeca: null), 
+        },
     );
   }
 }
