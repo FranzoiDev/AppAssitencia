@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import '../models/peca.dart';
+import '../services/peca_api.dart';
 
 class FormularioPecaPage extends StatefulWidget {
-  final Function(Peca) adicionarPeca;
   final Peca? peca;
 
-  const FormularioPecaPage({required this.adicionarPeca, this.peca, Key? key})
-      : super(key: key);
+  const FormularioPecaPage({this.peca, Key? key}) : super(key: key);
 
   @override
   _FormularioPecaPageState createState() => _FormularioPecaPageState();
@@ -16,6 +15,7 @@ class _FormularioPecaPageState extends State<FormularioPecaPage> {
   final _formKey = GlobalKey<FormState>();
   late String _nome;
   late double _preco;
+  final PecaApi api = PecaApi();
 
   @override
   void initState() {
@@ -69,12 +69,18 @@ class _FormularioPecaPageState extends State<FormularioPecaPage> {
                 },
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
+
                     Peca novaPeca = Peca(nome: _nome, preco: _preco);
-                    widget.adicionarPeca(novaPeca);
-                    Navigator.pop(context, novaPeca); // Retorna a peça criada
+                    if (widget.peca == null) {
+                      await api.create(novaPeca);
+                    } else {
+                      await api.update(widget.peca!.id!, novaPeca); 
+                    }
+
+                    Navigator.pop(context, novaPeca); 
                   }
                 },
                 child: Text(widget.peca == null ? 'Criar' : 'Atualizar'),
