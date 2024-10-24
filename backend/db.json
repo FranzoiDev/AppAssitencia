@@ -9,6 +9,11 @@
       "id": 2,
       "nome": "Memória RAM",
       "preco": 150
+    },
+    {
+      "id": 3,
+      "nome": "Fonte",
+      "preco": 200
     }
   ]
 }
