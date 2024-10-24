@@ -1,15 +1,14 @@
 {
-    "pecas": [
-      {
-        "id": 1,
-        "nome": "Placa-mãe",
-        "preco": 299.99
-      },
-      {
-        "id": 2,
-        "nome": "Memória RAM",
-        "preco": 159.99
-      }
-    ]
-  }
-  
+  "pecas": [
+    {
+      "id": 1,
+      "nome": "Placa-mãe",
+      "preco": 299
+    },
+    {
+      "id": 2,
+      "nome": "Memória RAM",
+      "preco": 150
+    }
+  ]
+}
