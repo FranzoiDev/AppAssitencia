@@ -3,6 +3,7 @@ import 'screens/home_page.dart';
 import 'screens/lista_peca_page.dart';
 import 'screens/formulario_peca_page.dart';
 import 'models/peca.dart';
+import 'screens/maps.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
       },
       routes: {
         '/lista': (context) => const PecaListScreen(),
+        '/maps': (context) => const BuscaCepPage(),
       },
     );
   }

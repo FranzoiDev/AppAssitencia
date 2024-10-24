@@ -21,13 +21,19 @@ class HomePage extends StatelessWidget {
             ListTile(
               title: const Text('Lista de Peças'),
               onTap: () {
-                Navigator.pushNamed(context, '/lista'); // Navega para a tela de lista
+                Navigator.pushNamed(context, '/lista'); 
+              },
+            ),
+                        ListTile(
+              title: const Text('Sua loja'),
+              onTap: () {
+                Navigator.pushNamed(context, '/maps'); 
               },
             ),
             ListTile(
               title: const Text('Adicionar Peça'),
               onTap: () {
-                Navigator.pushNamed(context, '/formulario'); // Navega para a tela de formulário
+                Navigator.pushNamed(context, '/formulario');
               },
             ),
           ],
