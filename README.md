@@ -1,4 +1,4 @@
-App Peças - Assistência Técnica
+App Assistencia - Assistência Técnica
 
 Este é um aplicativo de venda de peças para assistência técnica, desenvolvido em Flutter. A ideia é desenvolver um aplicativo que facilite a venda e compra de peças para técnicos e distribuidores.
 
