@@ -5,13 +5,13 @@ import '../services/peca_api.dart';
 class FormularioPecaPage extends StatefulWidget {
   final Peca? peca;
 
-  const FormularioPecaPage({Key? key, this.peca}) : super(key: key);
+  const FormularioPecaPage({super.key, this.peca});
 
   @override
-  _FormularioPecaPageState createState() => _FormularioPecaPageState();
+  FormularioPecaPageState createState() => FormularioPecaPageState();
 }
 
-class _FormularioPecaPageState extends State<FormularioPecaPage> {
+class FormularioPecaPageState extends State<FormularioPecaPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _precoController = TextEditingController();
@@ -21,7 +21,7 @@ class _FormularioPecaPageState extends State<FormularioPecaPage> {
   void initState() {
     super.initState();
     _nomeController.text = widget.peca?.nome ?? '';
-    _precoController.text = widget.peca?.preco?.toString() ?? '';
+    _precoController.text = widget.peca?.preco.toString() ?? '';
   }
 
   void _limparCampos() {

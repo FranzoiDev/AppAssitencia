@@ -7,10 +7,10 @@ class BuscaCepPage extends StatefulWidget {
   const BuscaCepPage({super.key});
 
   @override
-  _BuscaCepPageState createState() => _BuscaCepPageState();
+  BuscaCepPageState createState() => BuscaCepPageState();
 }
 
-class _BuscaCepPageState extends State<BuscaCepPage> {
+class BuscaCepPageState extends State<BuscaCepPage> {
   final TextEditingController _cepController = TextEditingController();
   String? _logradouro;
   String? _bairro; 
