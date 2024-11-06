@@ -4,14 +4,17 @@ import '../models/peca.dart';
 import 'crud_api.dart';
 
 class PecaApi extends CrudApi<Peca> {
-  final String apiUrl = 'http://localhost:3500/pecas';  
+  final String apiUrl;
+  final http.Client client;
 
-  PecaApi() : super('http://localhost:3500/pecas'); 
+  PecaApi({http.Client? client})
+      : apiUrl = 'http://localhost:3500/pecas',
+        client = client ?? http.Client(),
+        super('http://localhost:3500/pecas');
 
   @override
   Future<List<Peca>> getAll() async {
-    
-    final response = await http.get(Uri.parse(apiUrl)); 
+    final response = await client.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
       return body.map((dynamic item) => Peca.fromJson(item)).toList();
@@ -22,8 +25,7 @@ class PecaApi extends CrudApi<Peca> {
 
   @override
   Future<Peca> getById(int id) async {
-    
-    final response = await http.get(Uri.parse('$apiUrl/$id')); 
+    final response = await client.get(Uri.parse('$apiUrl/$id'));
     if (response.statusCode == 200) {
       return Peca.fromJson(jsonDecode(response.body));
     } else {
@@ -33,8 +35,7 @@ class PecaApi extends CrudApi<Peca> {
 
   @override
   Future<Peca> create(Peca item) async {
-    
-    final response = await http.post(
+    final response = await client.post(
       Uri.parse(apiUrl),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(item.toJson()),
@@ -48,8 +49,7 @@ class PecaApi extends CrudApi<Peca> {
 
   @override
   Future<Peca> update(int id, Peca item) async {
-   
-    final response = await http.put(
+    final response = await client.put(
       Uri.parse('$apiUrl/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(item.toJson()),
@@ -63,8 +63,7 @@ class PecaApi extends CrudApi<Peca> {
 
   @override
   Future<void> delete(int id) async {
-    
-    final response = await http.delete(Uri.parse('$apiUrl/$id'));
+    final response = await client.delete(Uri.parse('$apiUrl/$id'));
     if (response.statusCode != 200) {
       throw Exception('Falha ao deletar a peça');
     }
