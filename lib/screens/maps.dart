@@ -43,11 +43,32 @@ class BuscaCepPageState extends State<BuscaCepPage> {
           _bairro = data['bairro'];
           _cidade = data['localidade'];
           _estado = data['uf'];
-          _latitude = -23.55052;  
-          _longitude = -46.633308; 
         });
+
+        String enderecoCompleto = '$_logradouro, $_bairro, $_cidade, $_estado';
+        final googleMapsApiKey = '##SUA API KEY##'; 
+        final geocodingResponse = await http.get(
+          Uri.parse(
+              'https://maps.googleapis.com/maps/api/geocode/json?address=${Uri.encodeComponent(enderecoCompleto)}&key=$googleMapsApiKey'),
+        );
+
+        if (geocodingResponse.statusCode == 200) {
+          final geocodingData = jsonDecode(geocodingResponse.body);
+
+          if (geocodingData['results'].isNotEmpty) {
+            final location = geocodingData['results'][0]['geometry']['location'];
+            setState(() {
+              _latitude = location['lat'];
+              _longitude = location['lng'];
+            });
+          } else {
+            throw Exception('Endereço não encontrado.');
+          }
+        } else {
+          throw Exception('Erro ao obter coordenadas.');
+        }
       } else {
-        throw Exception('Erro ao buscar o CEP');
+        throw Exception('Erro ao buscar o CEP.');
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -78,7 +99,8 @@ class BuscaCepPageState extends State<BuscaCepPage> {
               ),
               keyboardType: TextInputType.number,
               maxLength: 8,
-            ),// Exemplo fixo para São Paulo
+            ),
+            
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: _carregando ? null : _buscarCep,
@@ -100,7 +122,7 @@ class BuscaCepPageState extends State<BuscaCepPage> {
                   ),
                   markers: {
                     Marker(
-                      markerId: MarkerId('local'),
+                      markerId: const MarkerId('local'),
                       position: LatLng(_latitude!, _longitude!),
                     ),
                   },

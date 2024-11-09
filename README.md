@@ -4,6 +4,7 @@ Este é um aplicativo de venda de peças para assistência técnica, desenvolvid
 
 Funcionalidades:
   - Tela de Dashboard: Tela inicial que dá as boas-vindas ao usuário.
+  - Tela de Maps: A ideia ser utilizar a api do google maps para pesquisar seu endereço, atualmente está na tela "sua loja".
   - Tela de Listagem: Lista de peças cadastradas no sistema.
   - Tela de Formulário: Permite adicionar novas peças.
   - Menu de Navegação: Acesso às telas através de um Drawer (menu lateral).

@@ -72,9 +72,9 @@ class PecaListScreenState extends State<PecaListScreen> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.refresh),  // Ícone de recarregar (reload)
+            icon: const Icon(Icons.refresh),  
             onPressed: () {
-              carregarPecas();  // Chama a função de recarregar as peças
+              carregarPecas();  
             },
           ),
         ],

@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.deepPurpleAccent,
               ),
               child: Text('Menu'),
             ),
